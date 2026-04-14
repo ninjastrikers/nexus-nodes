@@ -33,4 +33,5 @@ jobs:
           git config --local user.name "Ninjastrikers"
           git add configs/ docs/
           git commit -m "Auto-updated configs and website stats" || echo "No changes to commit"
+          git pull --rebase origin main
           git push
