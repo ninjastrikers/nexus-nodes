@@ -1,6 +1,6 @@
 # 🚀 Nexus Nodes
 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/ninjastrikers/Nexus-nodes/main.yml?label=Auto%20Update&style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/ninjastrikers/Nexus-nodes/update.yml?label=Auto%20Update&style=flat-square)
 ![GitHub last commit](https://img.shields.io/github/last-commit/ninjastrikers/Nexus-nodes?style=flat-square)
 ![License](https://img.shields.io/github/license/ninjastrikers/Nexus-nodes?style=flat-square)
 
