@@ -1,0 +1,36 @@
+name: Auto Update V2Ray Configs
+
+on:
+  schedule:
+    - cron: '0 */4 * * *' 
+  workflow_dispatch:       
+
+permissions:
+  contents: write
+
+jobs:
+  update-configs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run Aggregator Script
+        run: python main.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "ninja@ninjastrikers.net"
+          git config --local user.name "Ninjastrikers"
+          git add configs/ docs/
+          git commit -m "Auto-updated configs and website stats" || echo "No changes to commit"
+          git push
