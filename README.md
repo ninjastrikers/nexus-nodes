@@ -39,9 +39,9 @@ You can copy these raw links directly into your V2Ray client (v2rayN, v2rayNG, N
 To get configs for a specific country, visit the [Web Interface](https://nexus.ninjastrikers.net/) to easily scan/copy the links, or use the following URL structure:
 ```text
 https://raw.githubusercontent.com/ninjastrikers/Nexus-nodes/main/configs/countries/{COUNTRY_CODE}/all.txt
-
-(Replace {COUNTRY_CODE} with a 2-letter ISO code like us, ca, sg, hk, de, etc.)
 ```
+(Replace {COUNTRY_CODE} with a 2-letter ISO code like us, ca, sg, hk, de, etc.)
+
 ## ⚖️ Credits & Disclaimer
 
 This project is intended for educational purposes and network testing. We do not host, operate, or maintain any of the proxy servers provided in the aggregated lists. Please ensure your use of these networks complies with your local laws.
