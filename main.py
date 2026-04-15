@@ -16,6 +16,11 @@ SOURCES =[
     "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/mix/sub.html",
     "https://raw.githubusercontent.com/4n0nymou3/multi-proxy-config-fetcher/refs/heads/main/configs/proxy_configs.txt",
     "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/All_Configs_Sub.txt",
+    "https://raw.githubusercontent.com/aiboboxx/v2rayfree/main/v2",
+    "https://raw.githubusercontent.com/Pawdro/Collection/main/sub",
+    "https://raw.githubusercontent.com/free-v2ray-config/vmess/main/vmess.txt",
+    "https://raw.githubusercontent.com/free-v2ray-config/vless/main/vless.txt",
+    "https://raw.githubusercontent.com/free-v2ray-config/trojan/main/trojan.txt",
     "https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/v2ray.txt",
     "https://raw.githubusercontent.com/mianous/qiren/main/qiren.txt",
     "https://raw.githubusercontent.com/barry-far/V2ray-Config/main/Sub1.txt",
@@ -23,12 +28,7 @@ SOURCES =[
     "https://raw.githubusercontent.com/barry-far/V2ray-Config/main/Sub3.txt",
     "https://raw.githubusercontent.com/barry-far/V2ray-Config/main/Sub4.txt",
     "https://raw.githubusercontent.com/sarina-ad/v2ray/main/v2ray",
-    "https://raw.githubusercontent.com/SoliSpirit/v2ray-configs/refs/heads/main/all_configs.txt",
-    "https://raw.githubusercontent.com/MatinGhanbari/v2ray-configs/main/subscriptions/v2ray/all_sub.txt",
-    "https://raw.githubusercontent.com/hamedcode/port-based-v2ray-configs/main/sub/vless.txt",
-    "https://raw.githubusercontent.com/hamedcode/port-based-v2ray-configs/main/sub/vmess.txt",
-    "https://raw.githubusercontent.com/hamedcode/port-based-v2ray-configs/main/sub/ss.txt",
-    "https://raw.githubusercontent.com/hamedcode/port-based-v2ray-configs/main/sub/trojan.txt",
+    "https://raw.githubusercontent.com/Iran-v2ray/v2ray/main/v2ray",
 ]
 
 def decode_base64(text):
@@ -118,7 +118,7 @@ def get_override_country(remark):
         if flag in remark:
             return code
             
-    # 2. Strict United States & Canada checks (Highest Priority because of US-CA)
+    # 2. Strict United States & Canada checks
     if "USA" in remark_upper or "UNITED STATES" in remark_upper or "CALIFORNIA" in remark_upper:
         return "us"
     if re.search(r'(?<![A-Z])US(?![A-Z])', remark_upper):
@@ -126,7 +126,6 @@ def get_override_country(remark):
         
     if "CANADA" in remark_upper:
         return "ca"
-    # Matches CA, but ensuring it is not "US-CA" or "USA-CA"
     if re.search(r'(?<!US-)(?<!USA-)(?<![A-Z])CA(?![A-Z])', remark_upper):
         return "ca"
     
@@ -136,39 +135,36 @@ def get_override_country(remark):
         "de": ["DE", "GERMANY"],
         "fr": ["FR", "FRANCE"],
         "nl": ["NL", "NETHERLANDS"],
-        "sg":["SG", "SINGAPORE"],
+        "sg": ["SG", "SINGAPORE"],
         "jp": ["JP", "JAPAN"],
-        "hk":["HK", "HONG KONG"],
+        "hk": ["HK", "HONG KONG"],
         "in": ["IN", "INDIA"],
-        "au":["AU", "AUSTRALIA"],
+        "au": ["AU", "AUSTRALIA"],
         "ro": ["RO", "ROMANIA"],
-        "ru":["RU", "RUSSIA"],
+        "ru": ["RU", "RUSSIA"],
         "tw": ["TW", "TAIWAN"],
-        "kr": ["KR", "SOUTH KOREA"],
+        "kr":["KR", "SOUTH KOREA"],
         "tr": ["TR", "TURKEY"],
-        "br": ["BR", "BRAZIL"],
+        "br":["BR", "BRAZIL"],
         "id": ["ID", "INDONESIA"],
-        "vn": ["VN", "VIETNAM"],
-        "th":["TH", "THAILAND"],
-        "ir": ["IR", "IRAN"],
-        "it":["IT", "ITALY"],
-        "es": ["ES", "SPAIN"],
-        "se":["SE", "SWEDEN"],
-        "ch": ["CH", "SWITZERLAND"],
-        "pl":["PL", "POLAND"],
+        "vn":["VN", "VIETNAM"],
+        "th": ["TH", "THAILAND"],
+        "ir":["IR", "IRAN"],
+        "it": ["IT", "ITALY"],
+        "es":["ES", "SPAIN"],
+        "se": ["SE", "SWEDEN"],
+        "ch":["CH", "SWITZERLAND"],
+        "pl": ["PL", "POLAND"],
         "ae": ["AE", "UAE", "UNITED ARAB EMIRATES"],
-        "za": ["ZA", "SOUTH AFRICA"]
+        "za":["ZA", "SOUTH AFRICA"]
     }
     
     for code, words in strict_keywords.items():
         for word in words:
             if len(word) <= 3:
-                # 2 or 3-letter codes (e.g., HK, RO, UAE) must not be sandwiched by other letters 
-                # This ensures "RO" in "EUROPE" or "UK" in "FUKUOKA" does not match.
                 if re.search(rf'(?<![A-Z]){word}(?![A-Z])', remark_upper):
                     return code
             else:
-                # Full names (e.g., ROMANIA, HONG KONG) are safe to match globally
                 if word in remark_upper:
                     return code
                     
@@ -259,10 +255,10 @@ def test_all_latencies(country_grouped):
         global_valid.extend(valid)
         global_invalid.extend([c for c, l in invalid] + rest)
         
-        country_sorted[cc] = [c for c, l in valid] +[c for c, l in invalid] + rest
+        country_sorted[cc] =[c for c, l in valid] +[c for c, l in invalid] + rest
         
     global_valid.sort(key=lambda x: x[1])
-    all_sorted_configs = [c for c, l in global_valid] + global_invalid
+    all_sorted_configs =[c for c, l in global_valid] + global_invalid
     
     return country_sorted, all_sorted_configs
 
@@ -292,24 +288,52 @@ def main():
     print("Testing latency and sorting utilizing Check-Host API...")
     country_sorted, all_sorted_configs = test_all_latencies(country_grouped)
 
-    global_cat = {"all": all_sorted_configs, "light": all_sorted_configs[:50], "vless": [], "vmess":[], "shadowsocks":[], "trojan":[]}
+    # 🛑 APP CRASH PREVENTION LIMITS
+    MAX_GLOBAL_ALL = 3000   # Limit the global mix so huge updates don't break apps
+    MAX_COUNTRY_ALL = 1500  # Max per country general sub
+    MAX_LIGHT = 100         # Max for lightweight (fastest 100)
+    MAX_PROTO = 500         # Max per individual protocol (vless, vmess, etc.)
+
+    # Apply limits safely
+    global_cat = {
+        "all": all_sorted_configs[:MAX_GLOBAL_ALL], 
+        "light": all_sorted_configs[:MAX_LIGHT], 
+        "vless": [], "vmess":[], "shadowsocks": [], "trojan":[]
+    }
+    
     country_cat = {}
 
     for cc, configs in country_sorted.items():
-        country_cat[cc] = {"all": configs, "light": configs[:15], "vless": [], "vmess":[], "shadowsocks":[], "trojan":[], "unknown":[]}
+        # Trim general country list and lightweight list
+        country_cat[cc] = {
+            "all": configs[:MAX_COUNTRY_ALL], 
+            "light": configs[:MAX_LIGHT], 
+            "vless": [], "vmess": [], "shadowsocks":[], "trojan": [], "unknown":[]
+        }
         
+        # Populate specific protocols for the country (stopping once MAX_PROTO is hit)
         for config in configs:
-            if config.startswith("vless://"): country_cat[cc]["vless"].append(config)
-            elif config.startswith("vmess://"): country_cat[cc]["vmess"].append(config)
-            elif config.startswith("trojan://"): country_cat[cc]["trojan"].append(config)
-            elif config.startswith("ss://"): country_cat[cc]["shadowsocks"].append(config)
-            else: country_cat[cc]["unknown"].append(config)
+            if config.startswith("vless://") and len(country_cat[cc]["vless"]) < MAX_PROTO:
+                country_cat[cc]["vless"].append(config)
+            elif config.startswith("vmess://") and len(country_cat[cc]["vmess"]) < MAX_PROTO:
+                country_cat[cc]["vmess"].append(config)
+            elif config.startswith("trojan://") and len(country_cat[cc]["trojan"]) < MAX_PROTO:
+                country_cat[cc]["trojan"].append(config)
+            elif config.startswith("ss://") and len(country_cat[cc]["shadowsocks"]) < MAX_PROTO:
+                country_cat[cc]["shadowsocks"].append(config)
+            elif not config.startswith(("vless://", "vmess://", "trojan://", "ss://")) and len(country_cat[cc]["unknown"]) < MAX_PROTO:
+                country_cat[cc]["unknown"].append(config)
 
+    # Populate specific protocols globally (stopping once MAX_PROTO is hit)
     for config in all_sorted_configs:
-        if config.startswith("vless://"): global_cat["vless"].append(config)
-        elif config.startswith("vmess://"): global_cat["vmess"].append(config)
-        elif config.startswith("trojan://"): global_cat["trojan"].append(config)
-        elif config.startswith("ss://"): global_cat["shadowsocks"].append(config)
+        if config.startswith("vless://") and len(global_cat["vless"]) < MAX_PROTO: 
+            global_cat["vless"].append(config)
+        elif config.startswith("vmess://") and len(global_cat["vmess"]) < MAX_PROTO: 
+            global_cat["vmess"].append(config)
+        elif config.startswith("trojan://") and len(global_cat["trojan"]) < MAX_PROTO: 
+            global_cat["trojan"].append(config)
+        elif config.startswith("ss://") and len(global_cat["shadowsocks"]) < MAX_PROTO: 
+            global_cat["shadowsocks"].append(config)
 
     os.makedirs("configs", exist_ok=True)
     os.makedirs("docs", exist_ok=True)
