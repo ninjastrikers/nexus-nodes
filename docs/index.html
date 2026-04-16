@@ -85,20 +85,15 @@
 
     <main class="max-w-4xl mx-auto px-4 lg:px-0 flex-grow w-full">
         <div class="glass-panel p-1.5 rounded-2xl flex max-w-sm mx-auto mb-10 relative">
-            <button id="btn-global" onclick="switchTab('global')" class="flex-1 py-2.5 rounded-xl text-sm font-bold text-white bg-slate-800 shadow transition-all z-10">
-                <i class="fa-solid fa-globe mr-2"></i> Global Mix
-            </button>
-            <button id="btn-regional" onclick="switchTab('regional')" class="flex-1 py-2.5 rounded-xl text-sm font-bold text-slate-400 hover:text-slate-200 transition-all z-10">
+            <button id="btn-regional" onclick="switchTab('regional')" class="flex-1 py-2.5 rounded-xl text-sm font-bold text-white bg-slate-800 shadow transition-all z-10">
                 <i class="fa-solid fa-map-location-dot mr-2"></i> Regional
             </button>
+            <button id="btn-global" onclick="switchTab('global')" class="flex-1 py-2.5 rounded-xl text-sm font-bold text-slate-400 hover:text-slate-200 bg-transparent transition-all z-10">
+                <i class="fa-solid fa-globe mr-2"></i> Global Mix
+            </button>
         </div>
 
-        <div id="view-global" class="tab-content active space-y-4">
-            <h2 class="text-xl font-semibold text-white mb-6 flex items-center"><i class="fa-solid fa-layer-group text-sky-400 mr-3"></i> Unified Subscription Links</h2>
-            <div id="global-list" class="space-y-4"></div>
-        </div>
-
-        <div id="view-regional" class="tab-content space-y-4">
+        <div id="view-regional" class="tab-content active space-y-4">
             <div class="relative mb-8" id="custom-dropdown-container">
                 <div onclick="toggleDropdown()" class="glass-panel p-2 rounded-2xl flex items-center bg-slate-900/80 hover:bg-slate-800/80 transition-colors cursor-pointer border border-slate-700/50">
                     <div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-sky-400 shrink-0 shadow-inner">
@@ -121,6 +116,11 @@
 
             <h2 class="text-xl font-semibold text-white mb-6 flex items-center"><i class="fa-solid fa-server text-indigo-400 mr-3"></i> Servers for selected region</h2>
             <div id="regional-list" class="space-y-4"></div>
+        </div>
+
+        <div id="view-global" class="tab-content space-y-4">
+            <h2 class="text-xl font-semibold text-white mb-6 flex items-center"><i class="fa-solid fa-layer-group text-sky-400 mr-3"></i> Unified Subscription Links</h2>
+            <div id="global-list" class="space-y-4"></div>
         </div>
     </main>
 
